@@ -1,0 +1,60 @@
+.catalog {
+  padding: var(--big-offset) 0;
+
+  &__container {
+  }
+
+  &__title {
+    margin-bottom: var(--main-offset);
+  }
+
+  &__content {
+  }
+
+  &__left {
+    grid-column: 3 span;
+    background-color: var(--color-bg);
+    border-radius: 4px;
+    padding: var(--second-offset);
+  }
+
+  &__grid {
+    grid-column: 9 span;
+  }
+
+  &__subtitle {
+    margin: 0;
+    margin-bottom: var(--second-offset);
+    font: var(--preheight-book);
+  }
+
+  &__prop {
+    margin-bottom: var(--second-offset);
+  }
+
+  &__caption {
+    display: block;
+    font: var(--middle-font);
+    color: var(--color-main);
+    margin-bottom: var(--small-offset);
+  }
+
+  &__prop-inner {
+  }
+
+  &__prop-checkboxes {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.catalog-list {
+  grid-template-columns: repeat(9, 1fr);
+
+  &__item {
+    grid-column: 3 span;
+  }
+}
+
+.sizes-table {
+}
