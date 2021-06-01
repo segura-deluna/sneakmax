@@ -10,7 +10,7 @@ html {
 
 body {
   margin: 0;
-  font-family: "asd", sans-serif;
+  font-family: "Intro", sans-serif;
   background-color: var(--color-white);
 }
 
@@ -74,4 +74,20 @@ a {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: var(--grid-gap);
+}
+
+.btn {
+  border-radius: 4px;
+  font: 500 16px / 140% var(--font-family);
+  padding: 22px 47px;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+  &--primary {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+
+    &:hover {
+      background-color: var(--color-accent-hover);
+    }
+  }
 }

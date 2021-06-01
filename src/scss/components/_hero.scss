@@ -1,4 +1,48 @@
 .hero {
-  height: 800px;
+  position: relative;
+  height: 528px;
+  padding: 100px 0;
   background-color: var(--color-eastbay);
+
+  &__container {
+    position: relative;
+    height: 100%;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  &__bg-text {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    margin-top: 60px;
+    margin-left: 50px;
+    font-family: "Intro", sans-serif;
+    font-weight: 700;
+    font-size: 200px;
+    line-height: 200px;
+    color: rgba(255, 255, 255, 0.12);
+    transform: translate(-50%, -50%);
+  }
+
+  &__title {
+    max-width: 580px;
+    margin: 0;
+    margin-top: 50px;
+    margin-bottom: var(--second-offset);
+    font: 700 36px / 140% var(--font-family);
+    color: var(--color-white);
+  }
+
+  &__descr {
+    font: var(--middle-font);
+    margin: 0;
+    margin-bottom: var(--main-offset);
+    max-width: calc(50% - 100px);
+    color: var(--color-white);
+  }
 }
