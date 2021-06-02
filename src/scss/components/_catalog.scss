@@ -13,13 +13,34 @@
 
   &__left {
     grid-column: 3 span;
+  }
+
+  &__filters {
     background-color: var(--color-bg);
     border-radius: 4px;
     padding: var(--second-offset);
   }
 
+  &__filters-btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__apply {
+    width: 100%;
+    margin-bottom: var(--second-offset);
+  }
+
   &__grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     grid-column: 9 span;
+  }
+
+  &__more {
+    margin-top: var(--big-offset);
   }
 
   &__subtitle {
@@ -56,5 +77,80 @@
   }
 }
 
-.sizes-table {
+.catalog-price {
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      height: 34px;
+      background-color: var(--color-gray);
+      transform: translateX(-50%);
+    }
+  }
+
+  &__input {
+    width: 50%;
+    height: 50px;
+    border: 1px solid var(--color-gray);
+    background-color: transparent;
+    text-align: center;
+
+    &:first-child {
+      border-right: none;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    &:last-child {
+      border-left: none;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+
+  .noUi-horizontal {
+    height: 2px;
+  }
+
+  .noUi-target {
+    background: var(--color-main);
+    border: none;
+    box-shadow: none;
+  }
+
+  .noUi-connect {
+    background: var(--color-main);
+  }
+
+  .noUi-horizontal .noUi-handle {
+    width: 3px;
+    height: 18px;
+    top: -8px;
+  }
+
+  .noUi-handle {
+    border: none;
+    border-radius: 100%;
+    box-shadow: none;
+    background: var(--color-main);
+    cursor: pointer;
+    right: 0;
+  }
+
+  .noUi-handle::before,
+  .noUi-handle::after {
+    display: none;
+  }
+
+  .noUi-handle-lower {
+    right: -3px;
+  }
 }
