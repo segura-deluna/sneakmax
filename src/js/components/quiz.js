@@ -1,44 +1,75 @@
 const quizData = [
   {
     number: 1,
-    title: "На какую сумму вы рассчитываете?",
-    answer_alias: "money",
+    title: "Какой тип кроссовок рассматриваете?",
+    answer_alias: "type",
     answers: [
       {
-        answer_title: "500 рублей",
+        answer_title: "кеды",
         type: "checkbox",
       },
       {
-        answer_title: "5000 рублей",
+        answer_title: "кеды",
         type: "checkbox",
       },
       {
-        answer_title: "Введу текстом",
-        type: "text",
+        answer_title: "кеды",
+        type: "checkbox",
+      },
+      {
+        answer_title: "кеды",
+        type: "checkbox",
+      },
+      {
+        answer_title: "кеды",
+        type: "checkbox",
+      },
+      {
+        answer_title: "кеды",
+        type: "checkbox",
       },
     ],
   },
   {
     number: 2,
-    title: "Какой именно вам нужен сайт?",
-    answer_alias: "great",
+    title: "Какой размер вам подойдет?",
+    answer_alias: "size",
     answers: [
       {
-        answer_title: "Лендинг-пейдж",
-        type: "radio",
+        answer_title: "менее 36",
+        type: "checkbox",
       },
       {
-        answer_title: "Корпоративный сайт",
-        type: "radio",
+        answer_title: "36-38",
+        type: "checkbox",
       },
       {
-        answer_title: "Интернет-магазин",
-        type: "radio",
+        answer_title: "39-41",
+        type: "checkbox",
+      },
+      {
+        answer_title: "42-44",
+        type: "checkbox",
+      },
+      {
+        answer_title: "45 и больше",
+        type: "checkbox",
       },
     ],
   },
   {
     number: 3,
+    title: "Уточните какие-либо моменты",
+    answer_alias: "messadge",
+    answers: [
+      {
+        answer_title: "Введите сообщение",
+        type: "text",
+      },
+    ],
+  },
+  {
+    number: 4,
     title: "Оставьте свой телефон, мы вам перезвоним",
     answer_alias: "phone",
     answers: [
@@ -55,28 +86,33 @@ const quizTemplate = (data = [], dataLength = 0, options) => {
   const { nextBtnText } = options;
   const answers = data.answers.map((item) => {
     return `
-		<label class="quiz-question__label">
-			<input type="${
-        item.type
-      }" data-valid="false" class="quiz-question__answer" name="${
+    <li class="quiz-question__item">
+      <img src="img/sneaker.jpg" alt="">
+      <label class="custom-checkbox quiz-question__label">
+        <input type="${
+          item.type
+        }" class="custom-checkbox__field quiz-question__answer" data-valid="false" name="${
       data.answer_alias
     }" ${
       item.type == "text" ? 'placeholder="Введите ваш вариант"' : ""
     } value="${item.type !== "text" ? item.answer_title : ""}">
-			<span>${item.answer_title}</span>
-		</label>
+        <span class="custom-checkbox__content">${item.answer_title}</span>
+      </label>
+    </li>
 	`;
   });
 
   return `
-	<div class="quiz__content">
-		<div class="quiz__questions">${number} из ${dataLength}</div>
+	<div class="quiz-questions">
 		<div class="quiz-question">
 			<h3 class="quiz-question__title">${title}</h3>
-			<div class="quiz-question__answers">
+			<ul class="quiz-question__answers list-reset">
 				${answers.join("")}
-			</div>
-			<button type="button" class="quiz-question__btn" data-next-btn>${nextBtnText}</button>
+			</ul>
+      <div class="quiz-bottom">
+        <div class="quiz__questions">${number} из ${dataLength}</div>
+			  <button type="button" class="btn btn-reset btn--thirdly quiz-question__btn" data-next-btn>${nextBtnText}</button>
+      </div>
 		</div>
 	</div>
 `;
@@ -253,7 +289,7 @@ class Quiz {
   }
 }
 
-window.quiz = new Quiz(".quiz", quizData, {
-  nextBtnText: "Далее",
+window.quiz = new Quiz(".quiz-form", quizData, {
+  nextBtnText: "Следующий шаг",
   sendBtnText: "Отправить",
 });
