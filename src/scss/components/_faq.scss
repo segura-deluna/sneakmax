@@ -1,0 +1,66 @@
+.faq {
+  padding: var(--big-offset) 0;
+
+  &__title {
+    margin-bottom: var(--main-offset);
+  }
+
+  &__list {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+}
+
+.faq-accordion {
+  border-top: 1px solid var(--color-main);
+  border-bottom: 1px solid var(--color-main);
+
+  &:not(:first-child) {
+    margin-top: -1px;
+  }
+
+  &__control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 30px 0;
+    text-align: left;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  &__title {
+    font: var(--preheight-book);
+  }
+
+  &__icon {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-image: url("../img/cross.svg");
+    background-position: 0 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease-in-out;
+  }
+  &.open .faq-accordion__icon {
+    transform: rotate(45deg);
+  }
+
+  &__content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    font: var(--middle-regular);
+    padding: 0 var(--second-offset);
+    will-change: max-height;
+    transition: all 0.3s ease-in-out;
+    box-sizing: content-box;
+  }
+
+  &.open .faq-accordion__content {
+    opacity: 1;
+    padding: 0 50px var(--second-offset) 0;
+  }
+}

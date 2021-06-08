@@ -60,22 +60,11 @@ const quizData = [
   {
     number: 3,
     title: "Уточните какие-либо моменты",
-    answer_alias: "messadge",
+    answer_alias: "message",
     answers: [
       {
         answer_title: "Введите сообщение",
-        type: "text",
-      },
-    ],
-  },
-  {
-    number: 4,
-    title: "Оставьте свой телефон, мы вам перезвоним",
-    answer_alias: "phone",
-    answers: [
-      {
-        answer_title: "Введите телефон",
-        type: "text",
+        type: "textarea",
       },
     ],
   },
@@ -85,25 +74,46 @@ const quizTemplate = (data = [], dataLength = 0, options) => {
   const { number, title } = data;
   const { nextBtnText } = options;
   const answers = data.answers.map((item) => {
-    return `
-    <li class="quiz-question__item">
-      <img src="img/sneaker.jpg" alt="">
-      <label class="custom-checkbox quiz-question__label">
+    if (item.type === "checkbox") {
+      return `
+        <li class="quiz-question__item">
+          <img src="img/sneaker.jpg" alt="">
+          <label class="custom-checkbox quiz-question__label">
+            <input type="${
+              item.type
+            }" class="custom-checkbox__field quiz-question__answer" data-valid="false" name="${
+        data.answer_alias
+      }" ${
+        item.type == "text" ? 'placeholder="Введите ваш вариант"' : ""
+      } value="${item.type !== "text" ? item.answer_title : ""}">
+            <span class="custom-checkbox__content">${item.answer_title}</span>
+          </label>
+        </li>
+      `;
+    } else if (item.type === "textarea") {
+      return `
+      <label class="quiz-question__label">
+        <textarea placeholder="${item.answer_title}"  class="quiz-question__message"></textarea>
+      </label>
+      `;
+    } else {
+      return `
+      <label class="quiz-question__label">
         <input type="${
           item.type
-        }" class="custom-checkbox__field quiz-question__answer" data-valid="false" name="${
-      data.answer_alias
-    }" ${
-      item.type == "text" ? 'placeholder="Введите ваш вариант"' : ""
-    } value="${item.type !== "text" ? item.answer_title : ""}">
-        <span class="custom-checkbox__content">${item.answer_title}</span>
+        }" data-valid="false" class="quiz-question__answer" name="${
+        data.answer_alias
+      }" ${
+        item.type == "text" ? 'placeholder="Введите ваш вариант"' : ""
+      } value="${item.type !== "text" ? item.answer_title : ""}">
+        <span>${item.answer_title}</span>
       </label>
-    </li>
-	`;
+    `;
+    }
   });
 
   return `
-	<div class="quiz-questions">
+
 		<div class="quiz-question">
 			<h3 class="quiz-question__title">${title}</h3>
 			<ul class="quiz-question__answers list-reset">
@@ -114,7 +124,7 @@ const quizTemplate = (data = [], dataLength = 0, options) => {
 			  <button type="button" class="btn btn-reset btn--thirdly quiz-question__btn" data-next-btn>${nextBtnText}</button>
       </div>
 		</div>
-	</div>
+
 `;
 };
 
@@ -153,14 +163,18 @@ class Quiz {
         );
 
         if (this.counter + 1 == this.dataLength) {
-          this.$el.insertAdjacentHTML(
-            "beforeend",
-            `<button type="button" data-send>${this.options.sendBtnText}</button>`
-          );
-          this.$el.querySelector("[data-next-btn]").remove();
+          // this.$el
+          //   .querySelector(".quiz-bottom")
+          //   .insertAdjacentHTML(
+          //     "beforeend",
+          //     `<button type="button" data-send>${this.options.sendBtnText}</button>`
+          //   );
+          // this.$el.querySelector("[data-next-btn]").remove();
         }
       } else {
-        console.log("А все! конец!");
+        console.log("А все! Конец!");
+        document.querySelector(".quiz-questions").style.display = "none";
+        document.querySelector(".asd").style.display = "block";
       }
     } else {
       console.log("Не валидно!");
@@ -196,6 +210,15 @@ class Quiz {
 
   valid() {
     let isValid = false;
+
+    let textarea = this.$el.querySelector("textarea");
+    if (textarea) {
+      if (textarea.value.length > 0) {
+        isValid = true;
+        return isValid;
+      }
+    }
+
     let elements = this.$el.querySelectorAll("input");
     elements.forEach((el) => {
       switch (el.nodeName) {
@@ -279,7 +302,6 @@ class Quiz {
             field.checked
           ) {
             valueString += field.value + ",";
-
             s[field.name] = valueString;
           }
         }
@@ -289,7 +311,7 @@ class Quiz {
   }
 }
 
-window.quiz = new Quiz(".quiz-form", quizData, {
+window.quiz = new Quiz(".quiz-form .quiz-questions", quizData, {
   nextBtnText: "Следующий шаг",
   sendBtnText: "Отправить",
 });
