@@ -1,17 +1,25 @@
 .contacts {
   padding: var(--big-offset) 0;
   background: #f3f7f6;
-  &__container {
-  }
 
-  &__text {
+  &__container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
   }
 
   &__title {
     margin-bottom: var(--big-offset);
   }
 
+  &__text {
+    margin-right: var(--second-offset);
+    width: calc(100% - (680px + var(--second-offset)));
+  }
+
   &__map {
+    width: 680px;
+    height: 500px;
   }
 
   &__item {
