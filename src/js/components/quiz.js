@@ -79,13 +79,11 @@ const quizTemplate = (data = [], dataLength = 0, options) => {
         <li class="quiz-question__item">
           <img src="img/sneaker.jpg" alt="">
           <label class="custom-checkbox quiz-question__label">
-            <input type="${
-              item.type
-            }" class="custom-checkbox__field quiz-question__answer" data-valid="false" name="${
-        data.answer_alias
-      }" ${
-        item.type == "text" ? 'placeholder="Введите ваш вариант"' : ""
-      } value="${item.type !== "text" ? item.answer_title : ""}">
+            <input type="${item.type}"
+						class="custom-checkbox__field quiz-question__answer"
+						data-valid="false" name="${data.answer_alias}"
+						${item.type == "text" ? 'placeholder="Введите ваш вариант"' : ""}
+						value="${item.type !== "text" ? item.answer_title : ""}">
             <span class="custom-checkbox__content">${item.answer_title}</span>
           </label>
         </li>
@@ -99,33 +97,17 @@ const quizTemplate = (data = [], dataLength = 0, options) => {
     } else {
       return `
       <label class="quiz-question__label">
-        <input type="${
-          item.type
-        }" data-valid="false" class="quiz-question__answer" name="${
-        data.answer_alias
-      }" ${
-        item.type == "text" ? 'placeholder="Введите ваш вариант"' : ""
-      } value="${item.type !== "text" ? item.answer_title : ""}">
+        <input type="${item.type}"
+				data-valid="false"
+				class="quiz-question__answer"
+				name="${data.answer_alias}"
+				${item.type == "text" ? 'placeholder="Введите ваш вариант"' : ""}
+				value="${item.type !== "text" ? item.answer_title : ""}">
         <span>${item.answer_title}</span>
       </label>
     `;
     }
   });
-
-  return `
-
-		<div class="quiz-question">
-			<h3 class="quiz-question__title">${title}</h3>
-			<ul class="quiz-question__answers list-reset">
-				${answers.join("")}
-			</ul>
-      <div class="quiz-bottom">
-        <div class="quiz__questions">${number} из ${dataLength}</div>
-			  <button type="button" class="btn btn-reset btn--thirdly quiz-question__btn" data-next-btn>${nextBtnText}</button>
-      </div>
-		</div>
-
-`;
 };
 
 class Quiz {
