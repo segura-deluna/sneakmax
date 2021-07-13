@@ -1,5 +1,7 @@
 const catalogList = document.querySelector('.catalog-list');
 const catalogMore = document.querySelector('.catalog__more');
+const prodModal = document.querySelector('[data-graph-target="prod-modal"] .modal-content');
+
 let prodQuantity = 6;
 let dataLength = null;
 
@@ -54,12 +56,29 @@ if (catalogList) {
         const modal = new GraphModal({
           isOpen: (modal) => {
             const openBtnId = modal.previousActiveElement.dataset.id;
-            console.log(openBtnId);
+
+            loadModalData(openBtnId);
           },
         });
       });
   };
   loadProducts(prodQuantity);
+
+  const loadModalData = (id = 1) => {
+    fetch('../data/data.json')
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        // prodModal.innerHTML = '';
+
+        for (let dataItem of data) {
+          if (dataItem.id == id) {
+            console.log(dataItem);
+          }
+        }
+      });
+  };
 
   catalogMore.addEventListener('click', (e) => {
     prodQuantity = prodQuantity + 3;
