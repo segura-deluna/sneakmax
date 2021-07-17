@@ -25,7 +25,14 @@
   &__video {
     width: 100%;
     height: 450px;
-    border: none;
+
+    & iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: none;
+    }
   }
 }
 
@@ -55,6 +62,7 @@
   &__item {
     width: 100%;
     max-width: 70px;
+    height: 75px;
     border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
@@ -62,6 +70,11 @@
     &:hover {
       opacity: 0.7;
     }
+  }
+
+  &--active {
+    opacity: 0.7;
+    pointer-events: none;
   }
 }
 
@@ -107,10 +120,6 @@
     }
   }
 
-  &__sizes {
-    margin-bottom: var(--main-offset);
-  }
-
   &__subtitle {
     display: inline-block;
     font: var(--middle-font);
@@ -151,16 +160,21 @@
   flex-wrap: wrap;
 
   &__item {
+    margin-bottom: var(--second-offset);
+
     &:not(:last-child) {
       margin-right: var(--second-offset);
     }
   }
 
   &__btn {
+    display: inline-flex;
+    justify-content: center;
+    width: 70px;
     font: var(--small-font);
     border: 1px solid var(--color-gray);
     border-radius: 4px;
-    padding: 6px 27px;
+    padding: 6px 0;
   }
 }
 
