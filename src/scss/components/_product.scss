@@ -70,3 +70,51 @@
     }
   }
 }
+
+//* Mini-product ===================
+.mini-product {
+  display: flex;
+  align-items: center;
+  padding: var(--small-offset) var(--second-offset);
+
+  &__image {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    margin-right: var(--small-offset);
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  &__text {
+    max-width: 270px;
+    margin-right: auto;
+  }
+
+  &__title {
+    font: var(--small-font);
+    margin: 0;
+    margin-bottom: 14px;
+  }
+
+  &__price {
+    font: var(--preheight-book);
+    font-weight: 700;
+    color: #4d4d4d;
+  }
+
+  &__delete {
+    width: 20px;
+    height: 20px;
+    & svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
