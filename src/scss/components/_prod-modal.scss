@@ -19,9 +19,6 @@
     margin-bottom: var(--main-offset);
   }
 
-  &__descr {
-  }
-
   &__video {
     width: 100%;
     height: 450px;
@@ -126,9 +123,6 @@
     margin-bottom: var(--second-offset);
   }
 
-  &__sizes-list {
-  }
-
   &__price {
     display: flex;
     align-items: center;
@@ -148,9 +142,6 @@
   &__order {
     width: 100%;
     margin-top: auto;
-  }
-
-  &__note {
   }
 }
 
@@ -216,10 +207,5 @@
     width: 100%;
     max-width: 430px;
     font: var(--middle-font);
-  }
-}
-
-.prod-chars {
-  &__item {
   }
 }

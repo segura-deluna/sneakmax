@@ -10,7 +10,7 @@ html {
 
 body {
   margin: 0;
-  font-family: "Intro", sans-serif;
+  font-family: 'Intro', sans-serif;
   background-color: var(--color-white);
 }
 
@@ -133,7 +133,7 @@ a {
   margin: 0;
 }
 
-@import "mixins";
+@import 'mixins';
 .custom-checkbox {
   @include custom-checkbox;
 

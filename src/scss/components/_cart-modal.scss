@@ -1,0 +1,140 @@
+.cart-modal {
+  width: 580px;
+  padding: var(--main-offset);
+  border-radius: 4px;
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--main-offset);
+  }
+
+  &__title {
+    margin: 0;
+    font: var(--preheight-book);
+    font-weight: 700;
+    color: var(--color-main);
+  }
+
+  &__order-number {
+    font: var(--small-font);
+    color: var(--color-gray);
+  }
+}
+
+.cart-modal-order {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 30px;
+  margin-bottom: var(--main-offset);
+
+  &__top {
+    font: var(--middle-font);
+    color: var(--color-gray);
+    & span {
+      font-weight: 700;
+      color: var(--color-main);
+    }
+  }
+
+  &__quantity {
+    margin-bottom: var(--second-offset);
+  }
+
+  &__summ {
+    margin-bottom: var(--second-offset);
+  }
+
+  &__content {
+  }
+
+  &__show {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-main);
+    margin-bottom: var(--second-offset);
+    & svg {
+      margin-left: 5px;
+      width: 7px;
+      height: 7px;
+      fill: currentColor;
+      object-fit: cover;
+    }
+  }
+
+  &__list {
+  }
+
+  &__item {
+    &:not(:last-child) {
+      margin-bottom: 14px;
+    }
+  }
+
+  &__product {
+  }
+
+  &__form {
+  }
+
+  &__input {
+    background: var(--color-alabaster);
+    &::placeholder {
+      color: var(--color-gray);
+    }
+
+    &:not(:last-child) {
+      margin-bottom: var(--small-offset);
+    }
+  }
+
+  &__btn {
+    margin-top: var(--small-offset);
+  }
+}
+
+.cart-modal-product {
+  display: flex;
+  align-items: center;
+
+  &__image {
+    flex-shrink: 0;
+    width: 80px;
+    height: 45px;
+    margin-right: var(--small-offset);
+    & img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  &__text {
+    max-width: 290px;
+    margin-right: auto;
+  }
+
+  &__title {
+    font: var(--small-font);
+    color: var(--color-main);
+    margin: 0;
+    margin-bottom: var(--small-offset);
+  }
+
+  &__price {
+    font: var(--middle-font);
+    font-weight: 700;
+    color: #4d4d4d;
+  }
+
+  &__delete {
+    font: var(--small-font);
+    color: var(--color-gray);
+  }
+}

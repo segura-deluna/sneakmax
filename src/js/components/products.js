@@ -66,10 +66,12 @@ if (catalogList) {
         });
         const modal = new GraphModal({
           isOpen: (modal) => {
-            const openBtnId = modal.previousActiveElement.dataset.id;
+            if (modal.modalContainer.classList.contains('prod-modal')) {
+              const openBtnId = modal.previousActiveElement.dataset.id;
 
-            loadModalData(openBtnId);
-            prodSlider.update();
+              loadModalData(openBtnId);
+              prodSlider.update();
+            }
           },
         });
       });
