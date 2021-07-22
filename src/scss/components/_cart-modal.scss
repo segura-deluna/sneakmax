@@ -21,6 +21,57 @@
     font: var(--small-font);
     color: var(--color-gray);
   }
+
+  & .mini-product {
+    display: flex;
+    align-items: center;
+    padding: 0;
+
+    &__image {
+      flex-shrink: 0;
+      width: 80px;
+      height: 45px;
+      margin-right: var(--small-offset);
+      & img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &__content {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+    }
+
+    &__text {
+      max-width: 290px;
+      margin-right: auto;
+    }
+
+    &__title {
+      font: var(--small-font);
+      color: var(--color-main);
+      margin: 0;
+      margin-bottom: var(--small-offset);
+    }
+
+    &__price {
+      font: var(--middle-font);
+      font-weight: 700;
+      color: #4d4d4d;
+    }
+
+    &__delete {
+      width: auto;
+      height: auto;
+      font: var(--small-font);
+      color: var(--color-gray);
+      & svg {
+        display: none;
+      }
+    }
+  }
 }
 
 .cart-modal-order {
@@ -46,9 +97,6 @@
     margin-bottom: var(--second-offset);
   }
 
-  &__content {
-  }
-
   &__show {
     display: inline-flex;
     align-items: center;
@@ -63,10 +111,7 @@
     }
   }
 
-  &__list {
-  }
-
-  &__item {
+  & .mini-cart__item {
     &:not(:last-child) {
       margin-bottom: 14px;
     }
@@ -91,50 +136,5 @@
 
   &__btn {
     margin-top: var(--small-offset);
-  }
-}
-
-.cart-modal-product {
-  display: flex;
-  align-items: center;
-
-  &__image {
-    flex-shrink: 0;
-    width: 80px;
-    height: 45px;
-    margin-right: var(--small-offset);
-    & img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  &__content {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-  }
-
-  &__text {
-    max-width: 290px;
-    margin-right: auto;
-  }
-
-  &__title {
-    font: var(--small-font);
-    color: var(--color-main);
-    margin: 0;
-    margin-bottom: var(--small-offset);
-  }
-
-  &__price {
-    font: var(--middle-font);
-    font-weight: 700;
-    color: #4d4d4d;
-  }
-
-  &__delete {
-    font: var(--small-font);
-    color: var(--color-gray);
   }
 }

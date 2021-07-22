@@ -9,6 +9,7 @@ const prodModalChars = prodModal.querySelector('.prod-chars');
 const prodModalVideo = prodModal.querySelector('.prod-modal__video');
 let prodQuantity = 6;
 let dataLength = null;
+let modal = null;
 
 const normalPrice = (str) => {
   return String(str).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
@@ -67,7 +68,7 @@ if (catalogList) {
 
         cartLogic();
 
-        const modal = new GraphModal({
+        modal = new GraphModal({
           isOpen: (modal) => {
             if (modal.modalContainer.classList.contains('prod-modal')) {
               const openBtnId = modal.previousActiveElement.dataset.id;
@@ -241,6 +242,7 @@ const loadCartData = (id = 1) => {
                     <span class="mini-product__price">${normalPrice(dataItem.price)} ₽ </span>
                   </div>
                   <button class="btn-reset mini-product__delete" aria-label="Удалить товар">
+                  Удалить
                     <svg>
                       <use xlink:href="img/sprite.svg#trash"></use>
                     </svg>
@@ -258,7 +260,7 @@ const loadCartData = (id = 1) => {
       plusFullPrice(item.price);
       printFullPrice();
 
-      let num = document.querySelectorAll('.mini-cart__item').length;
+      let num = document.querySelectorAll('.mini-cart__list .mini-cart__item').length;
 
       if (num > 0) {
         cartCount.classList.add('cart__count--visible');
@@ -269,7 +271,7 @@ const loadCartData = (id = 1) => {
 };
 
 const cartLogic = () => {
-  const productBtn = document.querySelectorAll('.product__btn');
+  const productBtn = document.querySelectorAll('.add-to-cart-btn');
 
   productBtn.forEach((el) => {
     el.addEventListener('click', (e) => {
@@ -294,7 +296,7 @@ const cartLogic = () => {
       minusFullPrice(price);
       printFullPrice();
 
-      let num = document.querySelectorAll('.mini-cart__item').length;
+      let num = document.querySelectorAll('.mini-cart__list .mini-cart__item').length;
       if (num == 0) {
         cartCount.classList.remove('cart__count--visible');
         miniCart.classList.remove('mini-cart--visible');
@@ -303,3 +305,16 @@ const cartLogic = () => {
     }
   });
 };
+
+const openOrderModal = document.querySelector('.mini-cart__btn');
+const orderModalList = document.querySelector('.cart-modal-order__list');
+const orderModalQuantity = document.querySelector('.cart-modal-order__quantity span');
+const orderModalSumm = document.querySelector('.cart-modal-order__summ span');
+
+openOrderModal.addEventListener('click', () => {
+  const productsHtml = document.querySelector('.mini-cart__list').innerHTML;
+  orderModalList.innerHTML = productsHtml;
+
+  orderModalQuantity.textContent = `${document.querySelectorAll('.mini-cart__list .mini-cart__item').length} шт`;
+  orderModalSumm.textContent = fullPrice.textContent;
+});
