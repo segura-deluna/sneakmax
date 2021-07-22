@@ -10,7 +10,7 @@ const prodModalVideo = prodModal.querySelector('.prod-modal__video');
 let prodQuantity = 6;
 let dataLength = null;
 
-const normalPrise = (str) => {
+const normalPrice = (str) => {
   return String(str).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
 };
 
@@ -44,7 +44,7 @@ if (catalogList) {
 												<use xlink:href="img/sprite.svg#eye"></use>
 											</svg>
 										</button>
-										<button class="btn-reset product__btn" aria-label="Добавить товар в корзину">
+										<button class="btn-reset product__btn add-to-cart-btn" data-id="${item.id}" aria-label="Добавить товар в корзину">
 											<svg>
 												<use xlink:href="img/sprite.svg#cart"></use>
 											</svg>
@@ -52,7 +52,7 @@ if (catalogList) {
 									</div>
 								</div>
 								<h3 class="product__title">${item.title}</h3>
-								<span class="product__price">${normalPrise(item.price)} р</span>
+								<span class="product__price">${normalPrice(item.price)} р</span>
 							</article>
 						</li>
 						`;
@@ -64,6 +64,9 @@ if (catalogList) {
         productTitle.forEach((element) => {
           $clamp(element, { clamp: '40px' });
         });
+
+        cartLogic();
+
         const modal = new GraphModal({
           isOpen: (modal) => {
             if (modal.modalContainer.classList.contains('prod-modal')) {
@@ -188,3 +191,115 @@ if (catalogList) {
     }
   });
 }
+
+// * работа корзины ================================
+
+let price = 0;
+const miniCartList = document.querySelector('.mini-cart__list');
+const fullPrice = document.querySelector('.mini-cart__summ');
+const cartCount = document.querySelector('.cart__count');
+
+const priceWithoutSpaces = (str) => {
+  return str.replace(/\s/g, '');
+};
+
+const plusFullPrice = (currentPrice) => {
+  return (price += currentPrice);
+};
+
+const minusFullPrice = (currentPrice) => {
+  return (price -= currentPrice);
+};
+
+const printFullPrice = () => {
+  fullPrice.textContent = `${normalPrice(price)} ₽`;
+};
+
+const printQuantity = (num) => {
+  cartCount.textContent = num;
+};
+
+const loadCartData = (id = 1) => {
+  fetch('../data/data.json')
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      for (let dataItem of data) {
+        if (dataItem.id == id) {
+          miniCartList.insertAdjacentHTML(
+            'afterbegin',
+            `
+            <li class="mini-cart__item" data-id="${dataItem.id}">
+              <article class="mini-cart__product mini-product">
+                <div class="mini-product__image">
+                  <img src="${dataItem.mainImage}" alt="${dataItem.title}">
+                </div>
+                <div class="mini-product__content">
+                  <div class="mini-product__text">
+                    <h3 class="mini-product__title">${dataItem.title}</h3>
+                    <span class="mini-product__price">${normalPrice(dataItem.price)} ₽ </span>
+                  </div>
+                  <button class="btn-reset mini-product__delete" aria-label="Удалить товар">
+                    <svg>
+                      <use xlink:href="img/sprite.svg#trash"></use>
+                    </svg>
+                  </button>
+                </div>
+              </article>
+            </li>
+            `
+          );
+          return dataItem;
+        }
+      }
+    })
+    .then((item) => {
+      plusFullPrice(item.price);
+      printFullPrice();
+
+      let num = document.querySelectorAll('.mini-cart__item').length;
+
+      if (num > 0) {
+        cartCount.classList.add('cart__count--visible');
+      }
+
+      printQuantity(num);
+    });
+};
+
+const cartLogic = () => {
+  const productBtn = document.querySelectorAll('.product__btn');
+
+  productBtn.forEach((el) => {
+    el.addEventListener('click', (e) => {
+      const id = e.currentTarget.dataset.id;
+      loadCartData(id);
+
+      e.currentTarget.classList.add('product__btn--disabled');
+    });
+  });
+
+  miniCartList.addEventListener('click', (e) => {
+    if (e.target.classList.contains('mini-product__delete')) {
+      const self = e.target;
+      const parent = self.closest('.mini-cart__item');
+      const price = parseInt(priceWithoutSpaces(parent.querySelector('.mini-product__price').textContent));
+      const id = parent.dataset.id;
+
+      document.querySelector(`.add-to-cart-btn[data-id="${id}"]`).classList.remove('product__btn--disabled');
+
+      parent.remove();
+
+      minusFullPrice(price);
+      printFullPrice();
+
+      let num = document.querySelectorAll('.mini-cart__item').length;
+      if (num == 0) {
+        cartCount.classList.remove('cart__count--visible');
+        miniCart.classList.remove('mini-cart--visible');
+      }
+      printQuantity(num);
+    }
+  });
+};
