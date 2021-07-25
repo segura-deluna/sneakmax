@@ -1,70 +1,70 @@
 const quizData = [
   {
     number: 1,
-    title: "Какой тип кроссовок рассматриваете?",
-    answer_alias: "type",
+    title: 'Какой тип кроссовок рассматриваете?',
+    answer_alias: 'type',
     answers: [
       {
-        answer_title: "кеды",
-        type: "checkbox",
+        answer_title: 'кеды',
+        type: 'checkbox',
       },
       {
-        answer_title: "кеды",
-        type: "checkbox",
+        answer_title: 'кеды',
+        type: 'checkbox',
       },
       {
-        answer_title: "кеды",
-        type: "checkbox",
+        answer_title: 'кеды',
+        type: 'checkbox',
       },
       {
-        answer_title: "кеды",
-        type: "checkbox",
+        answer_title: 'кеды',
+        type: 'checkbox',
       },
       {
-        answer_title: "кеды",
-        type: "checkbox",
+        answer_title: 'кеды',
+        type: 'checkbox',
       },
       {
-        answer_title: "кеды",
-        type: "checkbox",
+        answer_title: 'кеды',
+        type: 'checkbox',
       },
     ],
   },
   {
     number: 2,
-    title: "Какой размер вам подойдет?",
-    answer_alias: "size",
+    title: 'Какой размер вам подойдет?',
+    answer_alias: 'size',
     answers: [
       {
-        answer_title: "менее 36",
-        type: "checkbox",
+        answer_title: 'менее 36',
+        type: 'checkbox',
       },
       {
-        answer_title: "36-38",
-        type: "checkbox",
+        answer_title: '36-38',
+        type: 'checkbox',
       },
       {
-        answer_title: "39-41",
-        type: "checkbox",
+        answer_title: '39-41',
+        type: 'checkbox',
       },
       {
-        answer_title: "42-44",
-        type: "checkbox",
+        answer_title: '42-44',
+        type: 'checkbox',
       },
       {
-        answer_title: "45 и больше",
-        type: "checkbox",
+        answer_title: '45 и больше',
+        type: 'checkbox',
       },
     ],
   },
   {
     number: 3,
-    title: "Уточните какие-либо моменты",
-    answer_alias: "message",
+    title: 'Уточните какие-либо моменты',
+    answer_alias: 'message',
     answers: [
       {
-        answer_title: "Введите сообщение",
-        type: "textarea",
+        answer_title: 'Введите сообщение',
+        type: 'textarea',
       },
     ],
   },
@@ -74,21 +74,21 @@ const quizTemplate = (data = [], dataLength = 0, options) => {
   const { number, title } = data;
   const { nextBtnText } = options;
   const answers = data.answers.map((item) => {
-    if (item.type === "checkbox") {
+    if (item.type === 'checkbox') {
       return `
-        <li class="quiz-question__item">
+        <li class="quiz-question__item list-reset">
           <img src="img/sneaker.jpg" alt="">
           <label class="custom-checkbox quiz-question__label">
             <input type="${item.type}"
-						class="custom-checkbox__field quiz-question__answer"
-						data-valid="false" name="${data.answer_alias}"
-						${item.type == "text" ? 'placeholder="Введите ваш вариант"' : ""}
-						value="${item.type !== "text" ? item.answer_title : ""}">
+    				class="custom-checkbox__field quiz-question__answer"
+    				data-valid="false" name="${data.answer_alias}"
+    				${item.type == 'text' ? 'placeholder="Введите ваш вариант"' : ''}
+    				value="${item.type !== 'text' ? item.answer_title : ''}">
             <span class="custom-checkbox__content">${item.answer_title}</span>
           </label>
         </li>
       `;
-    } else if (item.type === "textarea") {
+    } else if (item.type === 'textarea') {
       return `
       <label class="quiz-question__label">
         <textarea placeholder="${item.answer_title}"  class="quiz-question__message"></textarea>
@@ -98,16 +98,29 @@ const quizTemplate = (data = [], dataLength = 0, options) => {
       return `
       <label class="quiz-question__label">
         <input type="${item.type}"
-				data-valid="false"
-				class="quiz-question__answer"
-				name="${data.answer_alias}"
-				${item.type == "text" ? 'placeholder="Введите ваш вариант"' : ""}
-				value="${item.type !== "text" ? item.answer_title : ""}">
+    		data-valid="false"
+    		class="quiz-question__answer"
+    		name="${data.answer_alias}"
+    		${item.type == 'text' ? 'placeholder="Введите ваш вариант"' : ''}
+    		value="${item.type !== 'text' ? item.answer_title : ''}">
         <span>${item.answer_title}</span>
       </label>
     `;
     }
   });
+
+  return `
+  <div class="quiz-question">
+    <h3 class="quiz-question__title">${title}</h3>
+    <div class="quiz-question__answers">
+      ${answers.join('')}
+    </div>
+    <div class="quiz-bottom">
+      <div class="quiz__questions">${number} из ${dataLength}</div>
+      <button type="button" class="quiz-question__btn btn btn-reset btn--thirdly" data-next-btn>${nextBtnText}</button>
+    </div>
+  </div>
+	`;
 };
 
 class Quiz {
@@ -124,62 +137,47 @@ class Quiz {
   }
 
   init() {
-    console.log("init!");
-    this.$el.innerHTML = quizTemplate(
-      this.data[this.counter],
-      this.dataLength,
-      this.options
-    );
+    console.log('init!');
+    this.$el.innerHTML = quizTemplate(this.data[this.counter], this.dataLength, this.options);
   }
 
   nextQuestion() {
-    console.log("next question!");
+    console.log('next question!');
 
     if (this.valid()) {
       if (this.counter + 1 < this.dataLength) {
         this.counter++;
-        this.$el.innerHTML = quizTemplate(
-          this.data[this.counter],
-          this.dataLength,
-          this.options
-        );
-
-        if (this.counter + 1 == this.dataLength) {
-          // this.$el
-          //   .querySelector(".quiz-bottom")
-          //   .insertAdjacentHTML(
-          //     "beforeend",
-          //     `<button type="button" data-send>${this.options.sendBtnText}</button>`
-          //   );
-          // this.$el.querySelector("[data-next-btn]").remove();
-        }
+        this.$el.innerHTML = quizTemplate(this.data[this.counter], this.dataLength, this.options);
       } else {
-        console.log("А все! Конец!");
-        document.querySelector(".quiz-questions").style.display = "none";
-        document.querySelector(".asd").style.display = "block";
+        console.log('А все! Конец!');
+        document.querySelector('.quiz-questions').style.display = 'none';
+        document.querySelector('.last-question').style.display = 'block';
+        document.querySelector('.quiz__title').textContent = 'Ваша подборка готова!';
+        document.querySelector('.quiz__descr').textContent =
+          'Оставьте свои контактные данные, чтобы мы смогли отправить выбранный товар';
       }
     } else {
-      console.log("Не валидно!");
+      console.log('Не валидно!');
     }
   }
 
   events() {
-    console.log("events!");
-    this.$el.addEventListener("click", (e) => {
-      if (e.target == document.querySelector("[data-next-btn]")) {
+    console.log('events!');
+    this.$el.addEventListener('click', (e) => {
+      if (e.target == document.querySelector('[data-next-btn]')) {
         this.addToSend();
         this.nextQuestion();
       }
 
-      if (e.target == document.querySelector("[data-send]")) {
+      if (e.target == document.querySelector('[data-send]')) {
         this.send();
       }
     });
 
-    this.$el.addEventListener("change", (e) => {
-      if (e.target.tagName == "INPUT") {
-        if (e.target.type !== "checkbox" && e.target.type !== "radio") {
-          let elements = this.$el.querySelectorAll("input");
+    this.$el.addEventListener('change', (e) => {
+      if (e.target.tagName == 'INPUT') {
+        if (e.target.type !== 'checkbox' && e.target.type !== 'radio') {
+          let elements = this.$el.querySelectorAll('input');
 
           elements.forEach((el) => {
             el.checked = false;
@@ -193,7 +191,7 @@ class Quiz {
   valid() {
     let isValid = false;
 
-    let textarea = this.$el.querySelector("textarea");
+    let textarea = this.$el.querySelector('textarea');
     if (textarea) {
       if (textarea.value.length > 0) {
         isValid = true;
@@ -201,28 +199,28 @@ class Quiz {
       }
     }
 
-    let elements = this.$el.querySelectorAll("input");
+    let elements = this.$el.querySelectorAll('input');
     elements.forEach((el) => {
       switch (el.nodeName) {
-        case "INPUT":
+        case 'INPUT':
           switch (el.type) {
-            case "text":
+            case 'text':
               if (el.value) {
                 isValid = true;
               } else {
-                el.classList.add("error");
+                el.classList.add('error');
               }
-            case "checkbox":
+            case 'checkbox':
               if (el.checked) {
                 isValid = true;
               } else {
-                el.classList.add("error");
+                el.classList.add('error');
               }
-            case "radio":
+            case 'radio':
               if (el.checked) {
                 isValid = true;
               } else {
-                el.classList.add("error");
+                el.classList.add('error');
               }
           }
       }
@@ -245,8 +243,8 @@ class Quiz {
         }
       }
 
-      const response = fetch("mail.php", {
-        method: "POST",
+      const response = fetch('mail.php', {
+        method: 'POST',
         body: formData,
       });
     }
@@ -255,8 +253,8 @@ class Quiz {
   serialize(form) {
     let field,
       s = {};
-    let valueString = "";
-    if (typeof form == "object" && form.nodeName == "FORM") {
+    let valueString = '';
+    if (typeof form == 'object' && form.nodeName == 'FORM') {
       let len = form.elements.length;
       for (let i = 0; i < len; i++) {
         field = form.elements[i];
@@ -264,26 +262,18 @@ class Quiz {
         if (
           field.name &&
           !field.disabled &&
-          field.type != "file" &&
-          field.type != "reset" &&
-          field.type != "submit" &&
-          field.type != "button"
+          field.type != 'file' &&
+          field.type != 'reset' &&
+          field.type != 'submit' &&
+          field.type != 'button'
         ) {
-          if (field.type == "select-multiple") {
+          if (field.type == 'select-multiple') {
             for (j = form.elements[i].options.length - 1; j >= 0; j--) {
               if (field.options[j].selected)
-                s[s.length] =
-                  encodeURIComponent(field.name) +
-                  "=" +
-                  encodeURIComponent(field.options[j].value);
+                s[s.length] = encodeURIComponent(field.name) + '=' + encodeURIComponent(field.options[j].value);
             }
-          } else if (
-            (field.type != "checkbox" &&
-              field.type != "radio" &&
-              field.value) ||
-            field.checked
-          ) {
-            valueString += field.value + ",";
+          } else if ((field.type != 'checkbox' && field.type != 'radio' && field.value) || field.checked) {
+            valueString += field.value + ',';
             s[field.name] = valueString;
           }
         }
@@ -293,7 +283,7 @@ class Quiz {
   }
 }
 
-window.quiz = new Quiz(".quiz-form .quiz-questions", quizData, {
-  nextBtnText: "Следующий шаг",
-  sendBtnText: "Отправить",
+window.quiz = new Quiz('.quiz-form .quiz-questions', quizData, {
+  nextBtnText: 'Следующий шаг',
+  sendBtnText: 'Отправить',
 });
